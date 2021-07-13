@@ -2,10 +2,24 @@
   <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
+    <router-view />
+    <vue-progress-bar></vue-progress-bar>
   </div>
-  <router-view />
 </template>
+<script>
+import { getCurrentInstance } from "vue";
 
+export default {
+  setup() {
+    const internalInstance = getCurrentInstance();
+    //  [App.vue specific] When App.vue is first loaded start the progress bar
+    internalInstance.appContext.config.globalProperties.$Progress.start();
+    setTimeout(() => {
+      internalInstance.appContext.config.globalProperties.$Progress.finish();
+    }, 3500);
+  },
+};
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
